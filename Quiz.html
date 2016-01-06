@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Santhiya Quiz</title>
+
+    <script type="text/javascript">
+        function test() {
+            alert("test!");
+           
+        }
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+ 
+    <style >
+
+
+        .box{
+            margin:0px auto;
+            width:500px;
+        }
+        .question{
+            height:50px;
+            background-color:lightgray;
+            font-size:1.5em;
+        }
+
+        .answer{
+            border-radius: 7px;
+            padding:5px;
+            background-color:lightgray;
+        }
+
+        .aWord{
+            height:30px;
+            margin: 10px 15px 10px 5px;
+            width:100%;
+            background-color:lightgray;
+            font-size:1.5em;
+            float:left;
+        }
+         .qWord{
+            height:50px;
+            width:100%;
+            background-color:lightgray;
+            font-size:1.5em;
+            float:left;
+        }
+
+
+         .left{
+             float:left;
+             width:70%;
+         }
+         .right{
+             float:left;
+             width:30%;
+
+         }
+
+    </style>
+
+</head>
+<body>
+    <div class="box">
+        <div id="correct">
+        </div>
+        <div id="incorrect">
+
+        </div>
+
+        <div class="question">
+        </div>
+
+        <!--<ol>
+            <li class="answer">Answer 1</li>
+            <li class="answer">Answer 1</li>
+            <li class="answer">Answer 1</li>
+            <li class="answer">Answer 1</li>
+
+
+        </ol>-->
+
+    </div>
+
+
+    <script>
+
+        var words = ["Deh", "Kheh", "Sang", "Pun", "Paap",
+                    "Aakha", "Beej", "Teerath", "Tap", "Deya",
+                    "Daan", "Til", "Bhaao", "Gun", "Avgun",
+                    "Nirgun", "Chao", "Bisraam", "Rut", "Vaar"                  
+                        ];
+
+        var answers = ["Body", "Dust", "With", "Good Deed", "Bad Deed",
+                        "To Say", "Seed", "Place of Pilgrimage", "Penance/Austerity", "Compassion",
+                        "Donation/Gift", "Tiny Amount (Sesame Seed)", "Love", "Good Quality", "Bad Quality",
+                        "Without any good qualities", "Desire", "Pause", "Season", "Day of Week"
+        ];
+        var correct = 0;
+        var incorrect = 0;
+
+        var k = 0;
+        for (k = 0; k < words.length; k++) {
+
+            var ol = document.createElement('ol');
+            var j;
+            for (j = 0; j < 4; j++) {
+                var li = document.createElement('li')
+                li.setAttribute("class", "answer");
+                ol.appendChild(li);
+            }
+
+            var oList = ol.getElementsByTagName('li');
+            console.log(oList);
+
+            var ques = k;
+            $(".question").append("\n What does " + words[ques] + " mean?");
+
+            var temp = answers.slice(0);
+            temp.splice(ques, 1);
+
+            var i;
+            for (i = 0; i < 4; i++) {
+                var randomnumber = Math.floor(Math.random() * temp.length)
+                oList[i].innerHTML = temp.splice(randomnumber,1);
+            }
+            var randomnumber = Math.floor(Math.random() * 4)
+            oList[randomnumber].innerHTML = answers[ques];
+            oList[randomnumber].setAttribute("correct", "true");
+
+            // $(".question").
+            $(".question").append(ol);
+
+        }
+
+        var temp
+        $(".answer").mouseover(function () {
+            var color = ($(this).css("background-color"));
+            //if red or green
+            if (color == "rgb(230, 76, 76)" || color == "rgb(116, 210, 116)") {
+            } else {
+                $(this).css("background-color", "rgb(239, 235, 159)");
+            }
+        });
+        $(".answer").mouseleave(function () {
+            var color = ($(this).css("background-color"));
+            console.log(color);
+            if (color == "rgb(230, 76, 76)" || color == "rgb(116, 210, 116)") {
+                console.log("red or green");
+            }else 
+                $(this).css("background-color", "lightgray");
+              
+        });
+
+        $(".answer").click(function () {
+            var color = ($(this).css("background-color"));
+            if (color == "rgb(230, 76, 76)" || color == "rgb(116, 210, 116)") {
+            }
+            else if ($(this).attr("correct") != null) {
+                $(this).css("background-color", "rgb(116, 210, 116)");
+                correct++;
+                $("#correct").html("Correct: " + correct)
+                if (correct >= 20) {
+                    alert("Good Job");
+                }
+
+            } else {
+                $(this).css("background-color", "rgb(230, 76, 76)");
+                incorrect++;
+                $("#incorrect").html("Incorrect: " + incorrect)
+            }
+        });
+
+
+
+    
+
+    </script>
+
+</body>
+</html>
